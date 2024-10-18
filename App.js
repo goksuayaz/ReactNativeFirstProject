@@ -6,6 +6,10 @@ export default function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+
+      <View style={styles.subContainer}>
+        <Text style={styles.textStyle} > Test TeXT </Text>
+      </View>
     </View>
   );
 }
@@ -17,4 +21,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  subContainer: {
+    backgroundColor: 'black',
+    width: '60%',
+    height: 200,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 16
+  },
+  textStyle: {
+    color: "white"
+  }
 });
