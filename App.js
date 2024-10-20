@@ -1,15 +1,52 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+
+import React, { useState } from 'react';
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
 
-      <View style={styles.subContainer}>
-        <Text style={styles.textStyle} > Test TeXT </Text>
-      </View>
+  const [name, setName] = useState("")
+  const [lastName, setLastName] = useState("")
+
+
+  console.log(name)
+  console.log(lastName)
+
+
+  return (
+
+    <View style={styles.container}>
+
+      <Text> Welcome {name} </Text>
+
+
+      <Text>Name </Text>
+      <TextInput
+        placeholder='Enter Your Name'
+        style={styles.textInputStyle}
+        onChangeText={setName}
+        value={name}
+
+      />
+
+      <Text> Last Name </Text>
+      <TextInput
+        placeholder='Enter Your Last Name'
+        style={styles.textInputStyle}
+        onChangeText={setLastName}
+        value={lastName}
+
+      />
+
+
+      <Pressable
+        onPress={() => console.log("clicked")}
+        style={styles.button}>
+
+
+        <Text style={styles.buttonText}>  Save </Text>
+
+
+      </Pressable>
     </View>
   );
 }
@@ -21,15 +58,35 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  subContainer: {
-    backgroundColor: 'black',
-    width: '60%',
-    height: 200,
+  textInputStyle: {
+    borderWidth: 1,
+    width: '80%',
+    height: 50,
+    borderRadius: 16,
+    marginVertical: 10,
+    textAlign: 'center',
+    color: 'blue',
+    fontWeight: 'bold'
+
+  },
+
+  button: {
+
+
+    borderWidth: 1,
+    width: '80%',
+    height: 50,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 16
+    backgroundColor: 'lightblue'
+
   },
-  textStyle: {
-    color: "white"
+
+  buttonText: {
+    fontWeight: 'bold',
+
   }
+
 });
+
