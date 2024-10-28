@@ -1,36 +1,48 @@
-import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Image, } from 'react-native';
 
 import React, { useState } from 'react';
+
+import Loading from "./src/components/Loading"
 
 export default function App() {
 
   const [name, setName] = useState("")
   const [lastName, setLastName] = useState("")
+  const [result, setResult] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
 
-  console.log(name)
-  console.log(lastName)
-
+  console.log(isLoading)
 
   return (
 
     <View style={styles.container}>
 
-      <Text> Welcome {name} </Text>
+      <Image
+        source={require('./assets/images/email.png')}
+        style={styles.image} />
 
 
-      <Text>Name </Text>
+      <Text style={styles.welcome}> Welcome {name} </Text>
+
+
+      <Text>Mail </Text>
       <TextInput
-        placeholder='Enter Your Name'
+
+        inputMode='email'
+
+        placeholder='Enter Your Mail'
         style={styles.textInputStyle}
         onChangeText={setName}
         value={name}
 
       />
 
-      <Text> Last Name </Text>
+      <Text> Password </Text>
       <TextInput
-        placeholder='Enter Your Last Name'
+        secureTextEntry={true}
+
+        placeholder='Enter Your Password'
         style={styles.textInputStyle}
         onChangeText={setLastName}
         value={lastName}
@@ -39,15 +51,26 @@ export default function App() {
 
 
       <Pressable
-        onPress={() => console.log("clicked")}
-        style={styles.button}>
+        onPress={() => setIsLoading(true)}
+        style={({ pressed }) => [{
+
+          backgroundColor: pressed ? "gray" : 'blue'
+
+        }, styles.button]} >
 
 
-        <Text style={styles.buttonText}>  Save </Text>
+        <Text style={styles.buttonText}>  Login </Text>
 
 
       </Pressable>
-    </View>
+
+      {isLoading
+
+        ? <Loading changeIsLoading={() => setIsLoading(false)} />
+        : null}
+
+      {/* <Loading />   */}
+    </View >
   );
 }
 
@@ -86,6 +109,18 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: 'bold',
 
+  },
+
+  image: {
+    width: 200,
+    height: 250,
+    resizeMode: 'stretch'
+
+  },
+
+  welcome: {
+    fontWeight: 'bold',
+    fontSize: 26,
   }
 
 });
