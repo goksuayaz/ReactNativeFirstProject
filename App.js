@@ -1,127 +1,45 @@
-import { StyleSheet, Text, View, TextInput, Pressable, Image, } from 'react-native';
+import React from 'react'
 
-import React, { useState } from 'react';
+import LoginPage from './src/screens/LoginPage'
 
-import Loading from "./src/components/Loading"
-
-export default function App() {
-
-  const [name, setName] = useState("")
-  const [lastName, setLastName] = useState("")
-  const [result, setResult] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
+import SignupPage from './src/screens/SignupPage'
 
 
-  console.log(isLoading)
+import { NavigationContainer } from '@react-navigation/native';
 
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
+
+
+const App = () => {
   return (
 
-    <View style={styles.container}>
+    <NavigationContainer>
 
-      <Image
-        source={require('./assets/images/email.png')}
-        style={styles.image} />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-
-      <Text style={styles.welcome}> Welcome {name} </Text>
+        <Stack.Screen name='Login' component={LoginPage} />
 
 
-      <Text>Mail </Text>
-      <TextInput
-
-        inputMode='email'
-
-        placeholder='Enter Your Mail'
-        style={styles.textInputStyle}
-        onChangeText={setName}
-        value={name}
-
-      />
-
-      <Text> Password </Text>
-      <TextInput
-        secureTextEntry={true}
-
-        placeholder='Enter Your Password'
-        style={styles.textInputStyle}
-        onChangeText={setLastName}
-        value={lastName}
-
-      />
+        <Stack.Screen name='SignUp' component={SignupPage} />
 
 
-      <Pressable
-        onPress={() => setIsLoading(true)}
-        style={({ pressed }) => [{
-
-          backgroundColor: pressed ? "gray" : 'blue'
-
-        }, styles.button]} >
 
 
-        <Text style={styles.buttonText}>  Login </Text>
 
 
-      </Pressable>
 
-      {isLoading
+      </Stack.Navigator>
 
-        ? <Loading changeIsLoading={() => setIsLoading(false)} />
-        : null}
 
-      {/* <Loading />   */}
-    </View >
-  );
+
+
+
+
+    </NavigationContainer>
+  )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  textInputStyle: {
-    borderWidth: 1,
-    width: '80%',
-    height: 50,
-    borderRadius: 16,
-    marginVertical: 10,
-    textAlign: 'center',
-    color: 'blue',
-    fontWeight: 'bold'
-
-  },
-
-  button: {
-
-
-    borderWidth: 1,
-    width: '80%',
-    height: 50,
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'lightblue'
-
-  },
-
-  buttonText: {
-    fontWeight: 'bold',
-
-  },
-
-  image: {
-    width: 200,
-    height: 250,
-    resizeMode: 'stretch'
-
-  },
-
-  welcome: {
-    fontWeight: 'bold',
-    fontSize: 26,
-  }
-
-});
+export default App
 
