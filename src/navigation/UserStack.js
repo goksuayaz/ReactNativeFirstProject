@@ -27,5 +27,5 @@ const UserStack = () => {
     )
 }
 
-export default UserStack
+export default UserStack;
 

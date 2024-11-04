@@ -1,13 +1,14 @@
 import { StyleSheet, Text, View, TextInput, Pressable, Image, } from 'react-native';
 
 import React, { useState } from 'react';
+import { Loading, CustomTextInput } from '../components';
 
 // import Loading from '../components/Loading'
 
 const LoginPage = ({ navigation }) => {
 
-    const [name, setName] = useState("")
-    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     const [result, setResult] = useState('')
     const [isLoading, setIsLoading] = useState(false)
 
@@ -18,36 +19,36 @@ const LoginPage = ({ navigation }) => {
 
         <View style={styles.container}>
 
+            <Text style={styles.welcome}> Welcome {result} </Text>
+
             <Image
                 source={require('../../assets/images/email.png')}
                 style={styles.image} />
 
+            <CustomTextInput
+                title='Email'
+                isSecureText={false}
+                handleOnOnchangeText={setEmail}
+                handleValue={email}
+                handlePlaceholder='Enter Your Email'
 
-            <Text style={styles.welcome}> Welcome {result} </Text>
-
-
-            <Text>Mail </Text>
-            <TextInput
-
-                inputMode='email'
-
-                placeholder='Enter Your Mail'
-                style={styles.textInputStyle}
-                onChangeText={setName}
-                value={name}
 
             />
 
-            <Text> Password </Text>
-            <TextInput
-                secureTextEntry={true}
+            <CustomTextInput
+                title='Password'
+                isSecureText={true}
+                handleOnOnchangeText={setPassword}
+                handleValue={password}
+                handlePlaceholder='Enter Your Password'
 
-                placeholder='Enter Your Password'
-                style={styles.textInputStyle}
-                onChangeText={setLastName}
-                value={lastName}
+
 
             />
+
+
+
+
 
 
             <Pressable
@@ -65,7 +66,7 @@ const LoginPage = ({ navigation }) => {
             </Pressable>
 
             <Pressable
-                onPress={() => navigation.navigate('SignUp')}
+                onPress={() => navigation.navigate('Signup')}
                 style={({ pressed }) => [{
 
                     backgroundColor: pressed ? "gray" : 'blue',
@@ -99,11 +100,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    textInputStyle: {
-        borderWidth: 1,
+
+
+    inputContainer: {
+
+
         width: '80%',
+
+    },
+
+
+
+    textInputStyle: {
+        borderBottomWidth: 1,
+        width: '100%',
         height: 50,
-        borderRadius: 16,
+        borderRadius: 10,
         marginVertical: 10,
         textAlign: 'center',
         color: 'blue',
@@ -120,7 +132,8 @@ const styles = StyleSheet.create({
         borderRadius: 16,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'lightblue'
+        backgroundColor: 'lightblue',
+        marginTop: 20
 
     },
 
@@ -130,15 +143,16 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        width: 200,
-        height: 250,
-        resizeMode: 'stretch'
+        width: 150,
+        height: 150,
+        marginBottom: 20,
 
     },
 
     welcome: {
         fontWeight: 'bold',
-        fontSize: 26,
+        fontSize: 30,
+        marginBottom: 30
     },
 
     signupButton: {
@@ -149,6 +163,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
+
+    },
+
+    inputBoxText: {
+        fontWeight: 'bold',
+        alignSelf: 'flex-start',
 
     }
 
