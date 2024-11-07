@@ -9,7 +9,7 @@ const LoginPage = ({ navigation }) => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [result, setResult] = useState('')
+
     const [isLoading, setIsLoading] = useState(false)
 
 
@@ -19,7 +19,7 @@ const LoginPage = ({ navigation }) => {
 
         <View style={styles.container}>
 
-            <Text style={styles.welcome}> Welcome {result} </Text>
+            <Text style={styles.welcome}> Welcome  </Text>
 
             <Image
                 source={require('../../assets/images/email.png')}
