@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from "./userSlice"
+import { thunk } from "redux-thunk";
 
 export const store = configureStore({
     reducer: {
@@ -7,5 +8,6 @@ export const store = configureStore({
 
 
 
-    }
+    },
+    middleware: (getDefaultMiddlware) => getDefaultMiddlware({ serializableCheck: false })
 })
