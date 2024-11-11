@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, Image, Pressable } from 'react-native'
-import React, { useState } from 'react'
+import React from 'react';
 import { CustomTextInput } from '../components';
 import { useState } from 'react';
 import CustomButton from '../components/CustomButton';

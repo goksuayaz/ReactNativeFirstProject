@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, ActivityIndicator, Pressable } from 'react-native'
 import React from 'react'
 
-const Loading = (changeIsLoading) => {
+const Loading = ({ changeIsLoading }) => {
 
 
     return (

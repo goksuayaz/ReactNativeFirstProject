@@ -1,95 +1,84 @@
-import { StyleSheet, Text, View, TextInput, Pressable, Image, } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import React from 'react';
+import { Loading, CustomTextInput, CustomButton } from '../components/'
+import { useSelector, useDispatch } from 'react-redux';
+import { setEmail, setPassword, setIsLoading } from '../redux/userSlice';
 
-import React, { useState } from 'react';
-import { Loading, CustomTextInput } from '../components';
 
-// import Loading from '../components/Loading'
 
 const LoginPage = ({ navigation }) => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    // const [email, setEmail] = useState("")
+    // const [password, setPassword] = useState("")
 
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
+
+    //userSlice içerisindeki verilerin okunması
 
 
-    // console.log(isLoading)
+    const { email, password, isLoading } = useSelector((state) => state.user);
+
+    // console.log("Email: ", email)
+    // console.log("Password: ", password)
+    // console.log("Loading: ", isLoading)
+
+
+
+
+    //useSlice içerisindeki reducer yapılarını kullanma veya veri gönderme
+    const dispatch = useDispatch();
 
     return (
-
         <View style={styles.container}>
-
-            <Text style={styles.welcome}> Welcome  </Text>
+            <Text style={styles.welcome}> Welcome </Text>
 
             <Image
                 source={require('../../assets/images/email.png')}
-                style={styles.image} />
+                style={styles.image}
+            />
 
             <CustomTextInput
-                title='Email'
+                title="Email"
                 isSecureText={false}
-                handleOnOnchangeText={setEmail}
+                handleOnOnchangeText={(text) => dispatch(setEmail(text))}
                 handleValue={email}
-                handlePlaceholder='Enter Your Email'
-
-
+                handlePlaceholder="Enter Your Email"
             />
 
             <CustomTextInput
-                title='Password'
+                title="Password"
                 isSecureText={true}
-                handleOnOnchangeText={setPassword}
+                handleOnOnchangeText={(password) => dispatch(setPassword(password))}
                 handleValue={password}
-                handlePlaceholder='Enter Your Password'
-
-
-
+                handlePlaceholder="Enter Your Password"
             />
 
+            <CustomButton
+                buttonText="Login"
+                setWidth="80%"
+                handleOnPress={() => dispatch(setIsLoading(true))}
+                buttonColor="blue"
+                pressedButtonColor="gray"
+            />
 
-
-
-
-
-            <Pressable
-                onPress={() => setIsLoading(true)}
-                style={({ pressed }) => [{
-
-                    backgroundColor: pressed ? "gray" : 'blue'
-
-                }, styles.button]} >
-
-
-                <Text style={styles.buttonText}>  Login </Text>
-
-
-            </Pressable>
-
-            <Pressable
-                onPress={() => navigation.navigate('Signup')}
-                style={({ pressed }) => [{
-
-                    backgroundColor: pressed ? "gray" : 'blue',
-                    marginTop: 50,
-
-                }, styles.signupButton]} >
-
-
-                <Text style={styles.buttonText}>  Sign Up </Text>
-
-
-            </Pressable>
+            <CustomButton
+                buttonText="Sign Up"
+                setWidth="30%"
+                handleOnPress={() => navigation.navigate('Signup')}
+                buttonColor="gray"
+                pressedButtonColor="lightgray"
+            />
 
             {isLoading
-
-                ? <Loading changeIsLoading={() => setIsLoading(false)} />
+                ? <Loading
+                    changeIsLoading={() => dispatch(setIsLoading(false))} />
                 : null}
 
-            {/* <Loading /> */}
-        </View >
-    );
-}
 
+
+        </View>
+    );
+};
 
 export default LoginPage;
 
@@ -100,77 +89,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
-
-    inputContainer: {
-
-
-        width: '80%',
-
-    },
-
-
-
-    textInputStyle: {
-        borderBottomWidth: 1,
-        width: '100%',
-        height: 50,
-        borderRadius: 10,
-        marginVertical: 10,
-        textAlign: 'center',
-        color: 'blue',
-        fontWeight: 'bold'
-
-    },
-
-    button: {
-
-
-        borderWidth: 1,
-        width: '80%',
-        height: 50,
-        borderRadius: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'lightblue',
-        marginTop: 20
-
-    },
-
-    buttonText: {
-        fontWeight: 'bold',
-
-    },
-
     image: {
         width: 150,
         height: 150,
         marginBottom: 20,
-
     },
-
     welcome: {
         fontWeight: 'bold',
         fontSize: 30,
-        marginBottom: 30
+        marginBottom: 30,
     },
-
-    signupButton: {
-
-        width: '30%',
-        height: 50,
-        borderRadius: 16,
-        alignItems: 'center',
-        justifyContent: 'center',
-
-
-    },
-
-    inputBoxText: {
-        fontWeight: 'bold',
-        alignSelf: 'flex-start',
-
-    }
-
 });
-
