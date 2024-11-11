@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image } from 'react-native';
 import React from 'react';
 import { Loading, CustomTextInput, CustomButton } from '../components/'
 import { useSelector, useDispatch } from 'react-redux';
-import { setEmail, setPassword, setIsLoading } from '../redux/userSlice';
+import { setEmail, setPassword, setIsLoading, setLogin } from '../redux/userSlice';
 
 
 
@@ -56,7 +56,7 @@ const LoginPage = ({ navigation }) => {
             <CustomButton
                 buttonText="Login"
                 setWidth="80%"
-                handleOnPress={() => dispatch(setIsLoading(true))}
+                handleOnPress={() => dispatch(setLogin())}
                 buttonColor="blue"
                 pressedButtonColor="gray"
             />

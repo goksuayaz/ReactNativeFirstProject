@@ -3,11 +3,14 @@ import React from 'react'
 import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from './AuthStack';
 import UserStack from './UserStack';
+import { useSelector } from 'react-redux';
+
 
 const RootNavigation = () => {
 
+    const { isAuth } = useSelector((state) => state.user)
 
-    const isAuth = false;
+
 
 
 
@@ -34,5 +37,3 @@ const RootNavigation = () => {
 }
 
 export default RootNavigation;
-
-const styles = StyleSheet.create({})
