@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import CustomButton from "../components/CustomButton";
@@ -9,10 +9,22 @@ const HomePage = () => {
 
     const [data, setData] = useState([])
 
-    console.log("data: ", data)
+    const [isSaved, setIsSaved] = useState(false)
+
+    console.log(isSaved)
+
+    // console.log("data: ", data)
+
+    useEffect(() => {
+
+        getData()
+
+    }, [isSaved])
+
 
 
     //SEND DATA TO FIREBASE
+
     const sendData = async () => {
 
         try {
@@ -31,14 +43,32 @@ const HomePage = () => {
 
     const getData = async () => {
 
-        const querySnapshot = await getDocs(collection(db, "rnLesson"));
-        querySnapshot.forEach((doc) => {
-            // console.log(`${doc.id} => ${doc.data()}`);
-            setData([...data, doc.data()])
-        });
+        const allData = []
+
+        try {
+
+            const querySnapshot = await getDocs(collection(db, "rnLesson"));
+            querySnapshot.forEach((doc) => {
+                // console.log(`${doc.id} => ${doc.data()}`);
+                allData.push(doc.data())
+            });
+
+            setData(allData)
+
+        } catch (error) {
+
+            console.log(error)
+        }
+
+
+
     }
 
+
+
+
     //DELETE DATA FROM DATABASE
+
     const deleteData = async () => {
         await deleteDoc(doc(db, "rnLesson", "MWtC7IMOoD2H485QxdSy"));
 
@@ -66,17 +96,25 @@ const HomePage = () => {
     return (
         <View style={styles.container}>
 
-            <Text> {data.title} </Text>
-            <Text> {data.content} </Text>
-            <Text> {data.lesson} </Text>
+            {data.map((value, index) => {
 
+                return (
+                    <View key={index}>
+                        <Text> {index}</Text>
+
+                        <Text> {value.title} </Text>
+                        <Text> {value.content} </Text>
+                        <Text> {value.lesson} </Text>
+                    </View>
+                )
+            })}
 
             <CustomButton
                 buttonText={"Save"}
                 setWidth={"40%"}
                 buttonColor={'blue'}
                 pressedButtonColor={'gray'}
-                handleOnPress={sendData}
+                handleOnPress={() => { sendData(), setIsSaved(isSaved === false ? true : false) }}
             />
 
 
