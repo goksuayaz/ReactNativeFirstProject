@@ -1,10 +1,11 @@
-import { Pressable, StyleSheet, Text, View, TextInput } from 'react-native'
+import { Pressable, StyleSheet, Text, View, TextInput, FlatList, SafeAreaView } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import CustomButton from "../components/CustomButton";
 import { useDispatch } from 'react-redux';
 import { logout } from '../redux/userSlice';
+import Animated, { BounceIn } from 'react-native-reanimated';
 
 const HomePage = () => {
 
@@ -122,35 +123,51 @@ const HomePage = () => {
     }
 
 
+    const renderItem = ({ item, index }) => {
+
+        return (
+
+            <Animated.View
+                entering={BounceIn.delay(100 * (index + 1))}
+
+                style={styles.flatlistContainer}>
+                <Text>  {item.id} </Text>
+                <Text>  {item.title} </Text>
+                <Text>  {item.content} </Text>
+
+            </Animated.View>
+        )
+
+
+    }
+
+
 
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
 
             <TextInput
                 value={updateTheData}
                 onChangeText={setUpdaTheData}
                 placeholder='enter your data'
-                style={{ borderWidth: 1, width: '50%', paddingVertical: 10, textAlign: 'center', marginBottom: 30 }}
+                style={{ borderWidth: 2, width: '40%', paddingVertical: 10, textAlign: 'center', marginTop: 30, marginBottom: 40 }}
 
 
             />
 
-            {data.map((value, index) => {
 
-                return (
-                    <Pressable
-                        onPress={() => [updateData(value.id), setIsSaved(isSaved === false ? true : false)]}
-                        key={index}>
-                        <Text> {index}</Text>
-                        <Text> {value.id} </Text>
+            <FlatList
+                data={data}
+                style={styles.flatlist}
+                keyExtractor={item => item.id}
+                renderItem={renderItem}
 
-                        <Text> {value.title} </Text>
-                        <Text> {value.content} </Text>
-                        <Text> {value.lesson} </Text>
-                    </Pressable>
-                )
-            })}
+            />
+
+
+
+
 
             <CustomButton
                 buttonText={"Save"}
@@ -158,6 +175,7 @@ const HomePage = () => {
                 buttonColor={'blue'}
                 pressedButtonColor={'gray'}
                 handleOnPress={() => { sendData(), setIsSaved(isSaved === false ? true : false) }}
+
             />
 
 
@@ -167,6 +185,7 @@ const HomePage = () => {
                 buttonColor={'blue'}
                 pressedButtonColor={'gray'}
                 handleOnPress={getData}
+
             />
 
 
@@ -183,6 +202,7 @@ const HomePage = () => {
                 buttonColor={'blue'}
                 pressedButtonColor={'gray'}
                 handleOnPress={updateData}
+
             />
             <CustomButton
                 buttonText={"Logout"}
@@ -190,11 +210,12 @@ const HomePage = () => {
                 buttonColor={'red'}
                 pressedButtonColor={'gray'}
                 handleOnPress={handleLogout}
+
             />
 
 
 
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -205,9 +226,27 @@ const styles = StyleSheet.create({
 
     container: {
 
-        flex: 1,
+        flex: 2,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'tomato'
+    },
+
+    flatlistContainer: {
+
+        borderWidth: 1,
+        marginVertical: 5,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    flatlist: {
+        width: "90%",
+        backgroundColor: "white",
+        padding: 10,
+
+
+
     }
 })

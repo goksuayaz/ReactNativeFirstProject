@@ -47,22 +47,6 @@ const LoginPage = ({ navigation }) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <View style={styles.container}>
             <Text style={styles.welcome}> Welcome </Text>
