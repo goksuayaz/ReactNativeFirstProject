@@ -1,15 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import { auth } from '../../firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const login = createAsyncThunk('user/login', async ({ email, password }) => {
 
     try {
         const auth = getAuth();
         const userCredential = await signInWithEmailAndPassword(auth, email, password)
+
         const user = userCredential.user;
 
         const token = user.stsTokenManager.accessToken;
+        console.log(user)
 
 
         const userData = {
@@ -17,6 +19,9 @@ export const login = createAsyncThunk('user/login', async ({ email, password }) 
             user: user,
 
         }
+
+        await AsyncStorage.setItem("userToken", token)
+
 
         return userData
 
@@ -27,6 +32,34 @@ export const login = createAsyncThunk('user/login', async ({ email, password }) 
 
     }
 })
+
+
+//Kullanıcı otomatik giriş işlemleri
+
+export const autoLogin = createAsyncThunk("user/autoLogin", async () => {
+
+    try {
+        const token = await AsyncStorage.getItem("userToken")
+
+        if (token) {
+
+            return token
+
+
+        } else {
+            throw new Error("User Not Found")
+
+        }
+
+    } catch (error) {
+        throw error
+
+    }
+})
+
+
+
+
 
 
 const initialState = {
@@ -64,13 +97,13 @@ export const userSlice = createSlice({
 
     },
 
-    extraReducers: (builders) => {
+    extraReducers: (builder) => {
 
 
-        builders
+        builder
             .addCase(login.pending, (state) => {
                 state.isLoading = true;
-                state.isAuth = false
+                state.isAuth = false;
 
             })
             .addCase(login.fulfilled, (state, action) => {
@@ -85,6 +118,22 @@ export const userSlice = createSlice({
                 state.isAuth = false;
                 state.error = action.error.message;
 
+            })
+
+
+            .addCase(autoLogin.pending, (state) => {
+                state.isLoading = true;
+                state.isAuth = false;
+            })
+            .addCase(autoLogin.fulfilled, (state, action) => {
+                state.isLoading = false;
+                state.isAuth = true;
+                state.token = action.payload;
+            })
+            .addCase(autoLogin.rejected, (state, action) => {
+                state.isLoading = false;
+                state.isAuth = false;
+                state.token = null;
             })
 
 

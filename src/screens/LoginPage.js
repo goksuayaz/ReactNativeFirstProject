@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Loading, CustomTextInput, CustomButton } from '../components/'
 import { useSelector, useDispatch } from 'react-redux';
 import { setIsLoading } from '../redux/userSlice';
-import { login } from '../redux/userSlice';
+import { login, autoLogin } from '../redux/userSlice';
 
 
 const LoginPage = ({ navigation }) => {
@@ -17,9 +17,14 @@ const LoginPage = ({ navigation }) => {
 
     // const [isLoading, setIsLoading] = useState(false)
 
+
+
+
+
+
+
+
     //userSlice içerisindeki verilerin okunması
-
-
     const { isLoading } = useSelector((state) => state.user);
 
     // console.log("Email: ", email)
@@ -31,6 +36,32 @@ const LoginPage = ({ navigation }) => {
 
     //useSlice içerisindeki reducer yapılarını kullanma veya veri gönderme
     const dispatch = useDispatch();
+
+    //Kullanıcı daha once giris yaptiysa kontrol et ve otomatik giris yap
+    useEffect(() => {
+        dispatch(autoLogin())
+
+
+
+    }, [])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     return (
         <View style={styles.container}>
