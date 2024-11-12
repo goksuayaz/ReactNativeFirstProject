@@ -1,6 +1,6 @@
 
+![loginpage](https://github.com/user-attachments/assets/d6298d0c-7d54-4a75-8948-ccfd61acc6bd)
 
-![loginpage](https://github.com/user-attachments/assets/d97a2951-798e-4ce6-b5a0-25963c45aa64)
 
 
-![signuppage](https://github.com/user-attachments/assets/e63b0ba2-e398-4394-975b-f3fc352de469)
+![signuppage](https://github.com/user-attachments/assets/c2b48903-d749-4d10-92da-857c1eedd530)
